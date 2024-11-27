@@ -1,16 +1,4 @@
-import axios from "axios";
 import config from "../config"; // 중앙 관리된 API 키 가져오기
-
-// IP 주소 가져오기 함수
-const fetchIPAddress = async () => {
-  try {
-    const response = await axios.get("https://api.ipify.org?format=json");
-    return response.data.ip;
-  } catch (error) {
-    console.error("Failed to fetch IP address:", error);
-    return "unknown"; // IP 주소를 가져올 수 없을 경우 기본값
-  }
-};
 
 // 브라우저 정보 가져오기 함수
 const getBrowserInfo = () => {
@@ -30,13 +18,12 @@ const chatgptAPI = async (
   };
 
   // IP 주소 및 브라우저 정보 가져오기
-  const ipAddress = await fetchIPAddress();
   const browserInfo = getBrowserInfo();
 
   const data = {
     model: model,
     messages: messages, // 전체 메시지 기록 전송
-    user: `IP: ${ipAddress}, Browser: ${browserInfo}`, // 사용자 정보 포함
+    user: `Browser: ${browserInfo}`, // 사용자 정보 포함
     stream: true, // 스트림 활성화
   };
 
