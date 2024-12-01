@@ -44,54 +44,13 @@ const ChatBox = ({ messages, isTyping }) => {
   };
 
   return (
-    <div
-      className="chat-box"
-      ref={chatBoxRef}
-      style={{
-        height: "100vh",
-        overflowY: "auto",
-        border: "1px solid #ddd",
-        padding: "10px",
-        borderRadius: "5px",
-        backgroundColor: "#f9f9f9",
-      }}
-    >
+    <div className="chat-box" ref={chatBoxRef}>
       {messages.map((msg, index) => (
-        <div
-          key={index}
-          className={`chat-message ${msg.role}`}
-          style={{
-            display: "flex",
-            justifyContent: msg.role === "user" ? "flex-end" : "flex-start",
-            marginBottom: "10px",
-          }}
-        >
-          <div
-            style={{
-              maxWidth: "90%",
-              backgroundColor: msg.role === "user" ? "#d1e7dd" : "#e9ecef",
-              color: "#333",
-              padding: "10px",
-              borderRadius: "10px",
-              boxShadow: "0 1px 3px rgba(0, 0, 0, 0.1)",
-            }}
-          >
-            {renderMessage(msg.content, msg.role)}
-          </div>
+        <div key={index} className={`chat-message ${msg.role}`}>
+          <div>{renderMessage(msg.content, msg.role)}</div>
         </div>
       ))}
-      {isTyping && (
-        <p
-          className="typing-indicator"
-          style={{
-            fontStyle: "italic",
-            color: "#888",
-            marginTop: "10px",
-          }}
-        >
-          ChatGPT is typing...
-        </p>
-      )}
+      {isTyping && <p className="typing-indicator">ChatGPT is typing...</p>}
     </div>
   );
 };

@@ -1,3 +1,4 @@
+/* 공통 색상 변수 */
 :root {
   --bg-color: #f7f8fc;
   --text-color: #2c3e50;
@@ -17,6 +18,11 @@
   --dark-button-hover-bg: #1c7ed6;
 }
 
+/* 전역 스타일 */
+#root {
+  max-height: 100%;
+}
+
 body {
   background-color: var(--bg-color);
   color: var(--text-color);
@@ -26,46 +32,162 @@ body {
   transition: background-color 0.3s, color 0.3s;
 }
 
-.dark-mode {
-  --bg-color: var(--dark-bg-color);
-  --text-color: var(--dark-text-color);
-  --input-bg: var(--dark-input-bg);
-  --input-border: var(--dark-input-border);
-  --button-bg: var(--dark-button-bg);
-  --button-hover-bg: var(--dark-button-hover-bg);
-  --chat-bg: var(--dark-chat-bg);
+.hamburger-menu {
+  display: none;
 }
 
+/* app-header */
+.app-header {
+  position: relative; /* 다크 모드 버튼을 고정하기 위한 기준 */
+  display: flex;
+  justify-content: center; /* 제목을 중앙에 배치 */
+  align-items: center;
+  padding: 10px 20px;
+  background-color: var(--bg-color);
+  border-bottom: 1px solid var(--input-border);
+  height: 30px;
+}
+
+.app-title {
+  margin: 0;
+  font-size: 24px;
+  text-align: center;
+}
+
+/* 다크 모드 토글 버튼 스타일 */
+.dark-mode-toggle {
+  position: absolute; /* 부모를 기준으로 고정 */
+  top: 10px;
+  right: 10px;
+}
+
+.toggle-switch {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 24px;
+}
+
+.toggle-switch input {
+  display: none;
+}
+
+.slider {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  border-radius: 24px;
+  transition: background-color 0.3s;
+}
+
+.slider:before {
+  content: "";
+  position: absolute;
+  left: 4px;
+  bottom: 4px;
+  width: 16px;
+  height: 16px;
+  background-color: white;
+  border-radius: 50%;
+  transition: transform 0.3s;
+}
+
+.toggle-switch input:checked + .slider {
+  background-color: var(--button-bg);
+}
+
+.toggle-switch input:checked + .slider:before {
+  transform: translateX(26px);
+}
+
+/* contensts */
+.contents-wrapper {
+  display: flex;
+  height: calc(100% - 30px);
+}
+
+/* History 컨테이너 */
+.history-container {
+  width: 20vw;
+  padding: 20px;
+  flex-direction: column;
+  max-height: calc(
+    100vh - 30px - 20px - 20px
+  ); /* 전체 화면에서 상하 여백을 제외 */
+}
+
+.history-title {
+  display: flex;
+  height: 30px;
+  align-items: center; /* 세로 중앙 정렬 */
+  margin: 0 0 10px 0; /* 아래 여백 */
+}
+
+.history-list {
+  flex: 1; /* 남은 공간을 모두 사용 */
+  height: calc(100% - 30px - 10px);
+  overflow-y: auto;
+  border: 1px solid var(--input-border);
+  border-radius: 5px;
+  background-color: var(--chat-bg);
+}
+
+/* 채팅 컨테이너 */
 .chat-container {
-  max-width: 100vw;
+  width: 80vw;
+  max-width: 80vw;
   margin: 0 auto;
   padding: 20px;
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  height: calc(100vh - 30px - 20px - 20px); /* 전체 화면에서 상하 여백을 제외 */
+  /* max-height: 100vh; 브라우저 높이를 초과하지 않도록 설정 */
   box-sizing: border-box;
+  overflow: hidden; /* 내부 스크롤 관리 */
 }
 
+/* 모델 선택 및 Clear Chat 버튼 정렬 컨테이너 */
+.model-selector-container {
+  display: flex;
+  height: 30px;
+  justify-content: space-between; /* 왼쪽과 오른쪽으로 정렬 */
+  align-items: center; /* 세로 중앙 정렬 */
+  margin-bottom: 10px; /* 아래 여백 */
+}
+
+/* Clear Chat 버튼 스타일 */
+.clear-chat-button {
+  padding: 5px 10px;
+  font-size: 16px;
+  background-color: var(--button-bg);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.clear-chat-button:hover {
+  background-color: var(--button-hover-bg);
+}
+
+/* 채팅 박스 */
 .chat-box {
-  background-color: #f9f9f9;
-  color: #333;
-  padding: 15px;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  font-family: Arial, sans-serif;
+  flex: 1; /* 남은 공간을 모두 사용 */
+  height: 100vh;
+  overflow-y: auto;
+  border: 1px solid var(--input-border);
+  padding: 10px;
+  border-radius: 5px;
+  background-color: var(--chat-bg);
 }
 
 .chat-message {
   display: flex;
   margin-bottom: 10px;
-}
-
-.chat-message.user {
-  justify-content: flex-end;
-}
-
-.chat-message.assistant {
-  justify-content: flex-start;
 }
 
 .chat-message div {
@@ -75,40 +197,22 @@ body {
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
+.chat-message.user {
+  justify-content: flex-end;
+}
+
 .chat-message.user div {
   background-color: #d1e7dd;
   color: #333;
 }
 
+.chat-message.assistant {
+  justify-content: flex-start;
+}
+
 .chat-message.assistant div {
   background-color: #e9ecef;
   color: #333;
-}
-
-.chat-input {
-  display: flex;
-  gap: 10px;
-}
-
-.chat-input input {
-  flex: 1;
-  padding: 10px;
-  border: 1px solid var(--input-border);
-  border-radius: 4px;
-  background-color: var(--input-bg);
-}
-
-.chat-input button {
-  background-color: var(--button-bg);
-  color: white;
-  border: none;
-  border-radius: 4px;
-  padding: 10px 20px;
-  cursor: pointer;
-}
-
-.chat-input button:hover {
-  background-color: var(--button-hover-bg);
 }
 
 .typing-indicator {
@@ -117,17 +221,26 @@ body {
   margin-top: 10px;
 }
 
+/* 입력창 */
+.chat-input {
+  display: flex;
+  gap: 10px;
+  padding: 10px 0 0 0; /* 입력창과 화면 하단 간격 유지 */
+  border-top: 1px solid var(--input-border); /* 상단 경계선 */
+  background-color: var(--bg-color); /* 입력창 배경 */
+}
+
 textarea {
-  width: 100%;
+  flex: 1;
+  padding: 10px;
+  font-size: 16px;
+  resize: none;
   border: 1px solid var(--input-border);
   border-radius: 4px;
-  font-family: Arial, sans-serif;
-  padding: 10px;
-  box-sizing: border-box;
-  resize: none;
+  max-height: 200px;
   background-color: var(--input-bg);
   color: var(--text-color);
-  transition: height 0.2s ease-in-out; /* 높이 조정 애니메이션 */
+  transition: height 0.2s ease-in-out;
 }
 
 textarea:focus {
@@ -135,16 +248,44 @@ textarea:focus {
   border-color: var(--button-bg);
 }
 
-/* 일반 메시지 */
-.chat-message p {
-  margin: 0;
-  padding: 5px;
+textarea[disabled] {
+  background-color: #f5f5f5;
+  cursor: not-allowed;
+}
+
+.chat-input button {
+  padding: 10px 20px;
+  background-color: var(--button-bg);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.chat-input button:hover {
+  background-color: var(--button-hover-bg);
+}
+
+.chat-input button[disabled] {
+  background-color: #ccc;
+  color: #666;
+  cursor: not-allowed;
+}
+
+/* 다크 모드 스타일 */
+.dark-mode textarea {
+  background-color: var(--dark-input-bg);
+  color: var(--dark-text-color);
+}
+
+.dark-mode .chat-box {
+  background-color: var(--dark-chat-bg);
 }
 
 /* 코드 블록 */
 .code-block {
-  background-color: #f5f5f5; /* 다크모드: #2e2e2e */
-  color: #333; /* 다크모드: #ddd */
+  background-color: #f5f5f5;
+  color: #333;
   padding: 10px;
   margin: 10px 0;
   border-radius: 5px;
@@ -153,8 +294,146 @@ textarea:focus {
   white-space: pre-wrap;
 }
 
-/* 다크모드 코드 블록 */
 .dark-mode .code-block {
   background-color: #2e2e2e;
   color: #ddd;
+}
+
+/* 모바일 화면 */
+@media screen and (max-width: 768px) {
+  /* app-header 스타일 수정 */
+  .app-header {
+    display: flex;
+    justify-content: space-between; /* 왼쪽 정렬 */
+    align-items: center; /* 세로 중앙 정렬 */
+    height: 50px;
+    background-color: var(--bg-color);
+    border-bottom: 1px solid var(--input-border);
+    position: fixed; /* 상단에 고정 */
+    width: 100%;
+    top: 0;
+    box-sizing: border-box;
+    z-index: 1000;
+  }
+
+  /* contents-wrapper 스타일 수정 */
+  .contents-wrapper {
+    margin-top: 50px; /* app-header의 높이만큼 여백 추가 */
+    position: relative; /* 기본 위치를 유지 */
+    width: 100%; /* 모바일 화면에서 전체 너비 차지 */
+  }
+
+  .hamburger-menu,
+  .hamburger-menu span {
+    display: inline-block;
+    transition: all 0.4s;
+    box-sizing: border-box;
+  }
+
+  .hamburger-menu {
+    /* position: relative; */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    margin-right: 10px; /* app-title과 간격 */
+    cursor: pointer;
+    position: absolute;
+    flex-direction: column-reverse;
+  }
+
+  .hamburger-menu span {
+    position: absolute;
+    display: block;
+    height: 4px;
+    width: 100%;
+    background-color: var(--button-bg);
+    margin: 4px 0;
+    transition: transform 0.3s ease, opacity 0.3s ease; /* 부드러운 전환 추가 */
+  }
+
+  .hamburger-menu span:nth-of-type(1) {
+    top: 0;
+  }
+
+  .hamburger-menu span:nth-of-type(2) {
+    top: 8px;
+  }
+
+  .hamburger-menu span:nth-of-type(3) {
+    bottom: 0;
+  }
+
+  /* type-01 */
+  /* 중앙 라인이 고정된 자리에서 투명하게 사라지며 상하라인 회전하며 엑스자 만들기 */
+  .hamburger-menu.active-1 span:nth-of-type(1) {
+    -webkit-transform: translateY(9px) rotate(-45deg);
+    transform: translateY(9px) rotate(-45deg);
+  }
+
+  .hamburger-menu.active-1 span:nth-of-type(2) {
+    opacity: 0;
+  }
+
+  .hamburger-menu.active-1 span:nth-of-type(3) {
+    -webkit-transform: translateY(9px) rotate(45deg);
+    transform: translateY(-9px) rotate(45deg);
+  }
+
+  .app-title {
+    margin: 0;
+    font-size: 20px; /* 제목 크기 조정 */
+    flex-grow: 1; /* 제목이 남은 공간을 채우도록 설정 */
+    text-align: center; /* 제목을 중앙 정렬 */
+  }
+
+  /* 다크 모드 토글 버튼 스타일 */
+  .dark-mode-toggle {
+    position: static; /* 고정 위치 제거 */
+    flex-shrink: 0; /* 크기 줄어들지 않도록 설정 */
+    margin-left: 10px; /* 제목과의 간격 유지 */
+  }
+
+  /* 햄버거 메뉴 클릭 시 히스토리 리스트 표시 */
+  .history-list {
+    position: fixed;
+    top: 50px;
+    left: 0;
+    width: 100%;
+    background-color: var(--bg-color);
+    border-top: 1px solid var(--input-border);
+    /* transform: translateY(-100%); */
+    /* transition: transform 0.4s ease-in-out; */
+    overflow-y: auto;
+    height: calc(100vh - 50px); /* 전체 화면에서 상단 50px 제외 */
+  }
+
+  .history-container {
+    position: fixed; /* 레이아웃에서 분리 */
+    z-index: 999; /* 다른 요소와 겹침 방지 */
+    top: 50px; /* 상단 공간 */
+    left: 0;
+    width: 100%;
+    transform: translateY(-100%); /* 화면 밖으로 이동 */
+    opacity: 0; /* 완전히 투명하게 처리 */
+    height: calc(100vh - 50px); /* 상단 제외한 전체 화면 */
+    background-color: var(--bg-color);
+    align-items: center;
+    justify-content: space-between;
+    transition: transform 1.5s ease-in-out, opacity 1.5s ease-in-out; /* 동일한 시간과 타이밍 */
+    border-bottom: 1px solid var(--input-border);
+    pointer-events: none; /* 숨겨진 동안 클릭 차단 */
+  }
+
+  .history-container.active-1 {
+    transform: translateY(0); /* 화면으로 이동 */
+    opacity: 1; /* 투명도 복원 */
+    pointer-events: auto; /* 보이는 동안 클릭 가능 */
+  }
+
+  /* chat-container 크기 조정 */
+  .chat-container {
+    width: 100%;
+  }
 }

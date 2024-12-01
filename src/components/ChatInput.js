@@ -47,13 +47,6 @@ const ChatInput = ({ onSend, isTyping }) => {
         rows="3"
         disabled={isTyping} // ChatGPT 응답 중일 때 비활성화
         style={{
-          flex: 1,
-          padding: "10px",
-          fontSize: "16px",
-          resize: "none",
-          border: "1px solid #ccc",
-          borderRadius: "4px",
-          maxHeight: "200px", // 최대 높이 지정
           backgroundColor: isTyping ? "#f5f5f5" : "white", // 비활성화 시 색상 변경
           cursor: isTyping ? "not-allowed" : "text", // 비활성화 시 커서 변경
         }}
@@ -62,12 +55,8 @@ const ChatInput = ({ onSend, isTyping }) => {
         onClick={handleSend}
         disabled={isTyping} // ChatGPT 응답 중일 때 비활성화
         style={{
-          padding: "10px 20px",
-          marginLeft: "10px",
           backgroundColor: isTyping ? "#ccc" : "#0078d4", // 비활성화 시 버튼 색상 변경
           color: isTyping ? "#666" : "white",
-          border: "none",
-          borderRadius: "4px",
           cursor: isTyping ? "not-allowed" : "pointer", // 비활성화 시 커서 변경
         }}
       >

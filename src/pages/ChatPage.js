@@ -1,17 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import ChatBox from "../components/ChatBox";
 import ChatInput from "../components/ChatInput";
 import ModelSelector from "../components/ModelSelector";
-import DarkModeToggle from "../components/DarkModeToggle";
 import chatgptAPI from "../api/chatgpt";
-import "../styles/chat.css";
 
 const ChatPage = () => {
   const [messages, setMessages] = useState([
     { role: "assistant", content: "uyjang. GPT API 테스트~~" }, // 기본 시스템 메시지
   ]);
   const [selectedModel, setSelectedModel] = useState("");
-  const [isDarkMode, setIsDarkMode] = useState(false);
   const [isTyping, setIsTyping] = useState(false); // 응답 중 상태
 
   // 초기화 버튼을 눌렀을 때 메시지를 리셋
@@ -54,42 +51,20 @@ const ChatPage = () => {
     }
   };
 
-  const toggleDarkMode = () => {
-    setIsDarkMode((prev) => {
-      const newMode = !prev;
-      localStorage.setItem("darkMode", newMode);
-      document.body.classList.toggle("dark-mode", newMode);
-      return newMode;
-    });
-  };
-
   return (
     <div className="chat-container">
-      <h1>ChatGPT Clone</h1>
-      {/* 다크 모드 및 초기화 버튼 */}
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          marginBottom: "10px",
-        }}
-      >
-        <DarkModeToggle
-          isDarkMode={isDarkMode}
-          toggleDarkMode={toggleDarkMode}
+      {/* 모델 선택 및 Clear Chat 버튼 컨테이너 */}
+      <div className="model-selector-container">
+        {/* 모델 선택 및 채팅 UI */}
+        <ModelSelector
+          selectedModel={selectedModel}
+          onModelChange={setSelectedModel}
         />
-        <button
-          onClick={clearMessages}
-          style={{ padding: "5px 10px", cursor: "pointer" }}
-        >
+        {/* 다크 모드 및 초기화 버튼 */}
+        <button className="clear-chat-button" onClick={clearMessages}>
           Clear Chat
         </button>
       </div>
-      {/* 모델 선택 및 채팅 UI */}
-      <ModelSelector
-        selectedModel={selectedModel}
-        onModelChange={setSelectedModel}
-      />
       <ChatBox messages={messages} isTyping={isTyping} />
       <ChatInput onSend={handleSendMessage} isTyping={isTyping} />
     </div>

@@ -44,15 +44,12 @@ const ModelSelector = ({ selectedModel, onModelChange }) => {
   }
 
   return (
-    <div style={{ marginBottom: "20px" }}>
-      <label htmlFor="model-select" style={{ marginRight: "10px" }}>
-        Select Model:
-      </label>
+    <div>
+      <label htmlFor="model-select">Select Model:</label>
       <select
         id="model-select"
         value={selectedModel}
         onChange={(e) => onModelChange(e.target.value)}
-        style={{ padding: "5px", fontSize: "16px" }}
       >
         {models.map((model) => (
           <option key={model.id} value={model.id}>
