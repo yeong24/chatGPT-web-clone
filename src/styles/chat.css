@@ -436,4 +436,6 @@ textarea[disabled] {
   .chat-container {
     width: 100%;
   }
+  
+  /* 권한 테스트를 위한 커밋 */
 }
